@@ -6,7 +6,7 @@ class Solution
 {
 	private:
 		std::stack<int>					visitOrder;
-		std::vector<bool>				isVisited;
+		std::vector<bool>				visitedTiles;
 		std::vector<std::vector<int>>	edges;
 		int								result = 0;
 
@@ -18,7 +18,7 @@ class Solution
 int Solution::minReorder(int n, std::vector<std::vector<int>>& connections)
 {
 	edges = std::vector<std::vector<int>>(n);
-	isVisited = std::vector<bool>(n, false);
+	visitedTiles = std::vector<bool>(n, false);
 
 	for (std::vector<int> connection : connections)
 	{
@@ -26,7 +26,7 @@ int Solution::minReorder(int n, std::vector<std::vector<int>>& connections)
 		edges[connection[1]].push_back(connection[0]);
 	}
 	visitOrder.push(0);
-	isVisited[0] = true;
+	visitedTiles[0] = true;
 	while (visitOrder.empty() == false)
 		visitNode(visitOrder.top());
 	return result;
@@ -40,13 +40,13 @@ void	Solution::visitNode(int i)
 		if (nextNode < 0)
 		{
 			nextNode = -nextNode;
-			if (isVisited[nextNode] == false)
+			if (visitedTiles[nextNode] == false)
 				result++;
 		}
-		if (isVisited[nextNode] == false)
+		if (visitedTiles[nextNode] == false)
 		{
 			visitOrder.push(nextNode);
-			isVisited[nextNode] = true;
+			visitedTiles[nextNode] = true;
 		}
 	}
 }
